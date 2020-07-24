@@ -1,0 +1,122 @@
+\documentclass[A4paper, 11pt]{article}
+\usepackage[slovene]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{theorem}
+\usepackage{authblk}
+\usepackage{url}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+\graphicspath{ {slike/} }
+
+\title{Seminarska naloga iz statistike}
+\author{Klementina Pirc}
+\affil{Fakulteta za matematiko in fiziko \\ Oddelek za matematiko}
+\date{julij 2020}
+
+\newtheorem{definicija}{Definicija}
+\theorembodyfont{\mdseries}
+\newtheorem{zgled}{Zgled}
+
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\begin{document}
+
+\begin{titlepage} 
+
+\maketitle
+\thispagestyle{empty}
+	
+\end{titlepage}
+
+Podrobnejša navodila nalog se nahajajo v datoteki \textit{27\_sem\_nal\_Klementina\_Pirc.pdf}
+
+% 1. NALOGA
+
+\section*{1. naloga}
+
+V datoteki \textit{Kibergrad.csv} so podane informacije o 43 886 družinah. Spodnje naloge se navezujejo na stopnjo izobrazbe, ki jo imajo vodje gospodinjstev. Stopnje so označene s števili od 31 do 46. Naloge sem rešila s pomočjo programa Python in ustreznih knjižnic, postopek pa se nahaja v datoteki \textit{Kibergrad.py}
+
+\subsection*{a)}
+Na podlagi enostavnega slučajnega vzorca 200 družin poiščemo oceno za delež družin v celotni populaciji, katerih vodja gospodinjstva nima srednješolske izobrazbe. S pomočjo opisov stopenj izobrazbe ugotovimo, da moramo prešteti družine iz vzorca s stopnjo $<= 38$. Naj bo $d_i$ stopnja izobrazbe za i-to družino, definiramo 
+\[x_i = \left \{
+	\begin{array}{ll}
+		1  & \mbox{če } d_i \leq 38 \\
+		0 & \mbox{sicer}
+	\end{array}
+	\right.
+\]
+Sedaj lahko vzorčni delež $s$ izračunamo s formulo
+\[ s = \frac{1}{n} \sum_{i=1}^{n} x_i \]
+kjer je $n$ velikost vzorca, torej 200. Dobimo rezultat $s = 0.23$.  
+
+\subsection*{b)}
+Ocenimo standardno napako $se(s)$ in določimo 95\% interval zaupanja. Za izračun standardne napake moramo izračunati varianco $s$. Ker smo vzeli enostavni slučajno vzorec velja
+\[ var(s) = \frac{1}{n} \frac{N - n}{N - 1} \tilde{\sigma}^2 \]
+kjer je $N=43886$ velikost populacije in $\tilde{\sigma}^2$ nepristranska cenilka za populacijsko varianco. Torej
+\[ 
+\begin{split}
+\tilde{\sigma}^2 = \frac{N - 1}{N (n - 1)} \sum_{i=1}^{n} (x_i - s)^2 \\
+\Rightarrow var(s) & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (x_i - s)^2 \\
+		         & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (x_i^2 - 2x_i s + s^2) \\
+		         & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (x_i - 2x_i s + s^2) \\
+		         & = \frac{N - n}{N (n - 1)} (s - s^2)
+\end{split}
+\]
+in zato
+\[ se(s) = \sqrt{ \frac{N - n}{N (n - 1)} s (1 - s)} \]
+Upoštevali smo $x_i ^2 = x_i$, kar velja, ker $x_i \in \{0,1\}$. Standardna napaka za izbrani vzorec je $0.029763$. \\
+\\
+Interval zaupanja dobimo po formuli $s \mp z_\alpha se(s)$. Ker želimo 95\% natančnost, je $z_\alpha = 1.96$ in tako dobimo interval $[0.171662, 0.288337]$.
+
+\subsection*{c)}
+Izračunamo populacijski delež $S$ in standardno napako $se(S)$ s formulama
+\[ S = \frac{1}{N} \sum_{i=1}^{N} x_i  \qquad se(S) = \sqrt{\frac{\sigma ^2}{N}} = \sqrt{\frac{1}{N^2} \sum_{i=1}^{N} (x_i - S)^2} \]
+ter dobimo $S=0.211502$ in $se(S)=0.001949$. Interval zaupanja torej pokrije populacijski delež, saj $S \in [0.171662, 0.288337]$. \\
+\\
+Razlika med vzorčnim in populacijskim deležem znaša $0.018497$, razlika med vzorčno in populacijsko standardno napako pa $0.027814$.
+
+\subsection*{d)}
+Izberemo še 99 vzorcev, določimo 95\% intervale zaupanja, ter jih narišemo skupaj z intervalom za prvi vzorec. S horizontalno črto označimo vrednost S. Vidimo, da populacijski delež pokrije 96 intervalov.
+
+\includegraphics[scale=0.8]{Figure_1}
+
+\subsection*{e)}
+Izračunamo standardni odklon vzorčnih deležev  iz 100 prej izbranih vzorcev. Uporabimo formulo
+\[ \sigma_s = \sqrt{\frac{1}{m} \sum_{i=1}{m} (s_i - \bar{s})^2} \] 
+kjer je $m=100$ število vzorcev, $s_i$ vzorčni delež i-tega vzorca in $\bar{s}$ povprečje vzorčnih deležev. 
+$\sigma_s = 0.028618$, razlika med populacijsko standardno napako $se(S)$ in $\sigma_s$ pa je 0.026668. 
+% za vzorec velikosti 200?
+
+\newpage
+
+\subsection*{f)}
+Sedaj izberemo 100 vzorcev velikosti 800 in ponovimo postopke iz točk d) in e).
+\begin{itemize}
+\item $\sigma_s = 0.013002$
+\item $| \sigma_s - se(S) | = 0.011053$
+\item populacijski delež S pokrije 95 intervalov zaupanja
+\end{itemize}
+% teli intervali so mal shady
+% obrazlozitev in primerjava
+
+\includegraphics[scale=0.8]{Figure_2}
+
+% LITERATURA
+
+\begin{thebibliography}{9}
+\bibitem{veriznica}
+	E. Zakrajšek, \emph{Verižnica} (1999) od 6 do 10.
+	Dostopno na spletni učilnici FMF 2019/2020 predmeta Matematično modeliranje [22. 7. 2020]
+\bibitem{zapiski}
+	Zapiski s predavanj predmeta Matematično modeliranje.
+\end{thebibliography}
+
+\end{document}
+
+
