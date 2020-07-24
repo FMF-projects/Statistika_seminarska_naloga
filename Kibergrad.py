@@ -22,7 +22,7 @@ print('a) Delež družin z iskano lastnostjo v vzorcu je ' + str(delez))
 ###############
 
 N = 43886 # stevilo druzin / velikost populacije
-stand_napaka_vzorca = math.sqrt( (N-n) / (N-1) / n * delez * (1-delez) )
+stand_napaka_vzorca = math.sqrt( (N-n) / (n-1) / N * delez * (1-delez) )
 print('b) Standardna napaka deleža v vzorcu je ' + str(stand_napaka_vzorca))
 
 # 95% interval zaupanja: alfa = 0.05
@@ -39,7 +39,16 @@ print('b) Interval zaupanja je [' + str(a) + ',' + str(b) + ']')
 pop_delez = podatki[podatki["""'IZOBRAZBA'"""] <= 38]["""'IZOBRAZBA'"""].count() / N
 print('c) Delež družin z iskano lastnostjo v populaciji je ' + str(pop_delez))
 
-stand_napaka = math.sqrt( (N-n) / (N-1) / n * pop_delez * (1-pop_delez) )
+pop_var = 0
+izobrazba = podatki["""'IZOBRAZBA'"""].to_list() # podatki o celotni populaciji
+for i in range(N):
+    if izobrazba[i] <= 38:
+        izobrazba[i] = 1
+    else:
+        izobrazba[i] = 0
+    pop_var += (izobrazba[i] - pop_delez) ** 2 / (N**2)
+stand_napaka = math.sqrt(pop_var)
+
 print('c) Standardna napaka deleža v populaciji je ' + str(stand_napaka))
 
 razlika_delez = abs(delez - pop_delez)
@@ -67,7 +76,7 @@ for i in range(m-1):
     delez = vzorec[vzorec["""'IZOBRAZBA'"""] <= 38]["""'IZOBRAZBA'"""].count() / n
     delezi.append(delez)
 
-    stand_napaka_vzorca = math.sqrt( (N-n) / (N-1) / n * delez * (1-delez) )  
+    stand_napaka_vzorca = math.sqrt( (N-n) / (n-1) / N * delez * (1-delez) )  
     delta.append(stand_napaka_vzorca * z_alfa)
     
     a = delez - stand_napaka_vzorca * z_alfa
@@ -113,7 +122,7 @@ for i in range(m):
     delez = vzorec[vzorec["""'IZOBRAZBA'"""] <= 38]["""'IZOBRAZBA'"""].count() / n
     delezi.append(delez)
 
-    stand_napaka_vzorca = math.sqrt( (N-n) / (N-1) / n * delez * (1-delez) )  
+    stand_napaka_vzorca = math.sqrt( (N-n) / (n-1) / N * delez * (1-delez) )  
     delta.append(stand_napaka_vzorca * z_alfa)
 
     a = delez - stand_napaka_vzorca * z_alfa
