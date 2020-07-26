@@ -8,6 +8,7 @@
 \usepackage{theorem}
 \usepackage{authblk}
 \usepackage{url}
+\usepackage[normalem]{ulem}
 
 \usepackage{graphicx}
 \usepackage{subcaption}
@@ -106,6 +107,50 @@ Sedaj izberemo 100 vzorcev velikosti 800 in ponovimo postopke iz točk d) in e).
 % obrazlozitev in primerjava
 
 \includegraphics[scale=0.8]{Figure_2}
+
+
+% 2. NALOGA
+
+\section*{2. naloga}
+
+Želimo oceniti skupno vrednost inventarja z N enotami, kjer ima vsaka knjigovodsko vrednost $X$ in dejansko vrednost $Y$. Poznamo $X$ za vse enote in želimo oceniti vsoto dejanskih vrednosti vseh enot $\tau_Y$.
+\[ \tau_Y = \sum_{i=1}^{N} Y_i \]
+Vzamemo enostavni slučajni vzorec z $n$ enotami in predlagamo 3 možne cenilke
+
+\[ \hat{\tau}_Y ^ {(0)} := N  \bar{Y} \qquad \hat{\tau}_Y ^ {(1)} := \tau_X + N ( \bar{Y} - \bar{X}) \qquad \hat{\tau}_Y ^ {(2)} := \frac{\bar{Y}}{\bar{X}} \tau_X \]
+
+\subsection*{a)}
+Dokažimo, da je $\hat{\tau_Y} ^ {(1)}$ nepristranska: $\dashuline{ E(\hat{\tau}_Y ^ {(1)}) = \tau_Y}$ in izračunajmo njeno varianco. Uporabili bomo naslednje oznake. \\
+\\
+$\tau_X$, $\tau_Y$ \ldots vsota vrednosti spremenljivke $X$ oz. $Y$ na celotnem inventarju, \\
+$\mu_X$, $\mu_Y$ \ldots povprečna vrednost $X$ oz. $Y$ na celotnem inventarju, \\
+$\sigma_X$, $\sigma_Y$ \ldots standardni odklon $X$ oz. $Y$ na vseh enotah inventarja, \\
+$\rho_{XY}$ \ldots korelacijski koeficient med $X$ in $Y$ na celotnem inventarju. 
+
+
+\[ 
+\begin{split}
+E(\hat{\tau}_Y ^ {(1)}) & = E(\tau_X + N (\bar{Y} - \bar{X})) \\
+			       & = \tau_X  + N (E(\bar{Y}) - E(\bar{X})) \\
+			       %& = \tau_X + N  \left ( \frac{1}{n} \sum_{i=1}^{n} ( E(Y_i) - E(X_i) ) \right ) \\ 
+			       %& = \tau_X + N \left ( \frac{1}{n} \sum_{i=1}^{n} (\mu_Y - \mu_X) \right ) \\
+			       & = \tau_X + N \mu_Y - N \mu_X \\
+			       & = \tau_X + \tau_Y - \tau_X \\
+			       & = \tau_Y
+\end{split}
+\]
+
+\[
+\begin{split}
+var(\hat{\tau}_Y ^ {(1)})  & = var(\tau_X + N (\bar{Y} - \bar{X})) \\
+				& = N^2 var( \bar{Y} - \bar{X} ) \\
+				& = N^2 var( \bar{Y} + \bar{X} - 2 cov(\bar{Y},\bar{X}) ) \\
+				& = N^2 ( \frac{\sigma_Y^2}{n} \frac{N - n}{N - 1} + \frac{\sigma_X^2}{n} \frac{N - n}{N - 1} - 2\rho_{XY} ) \\
+				&= \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2) - 2 N^2 \rho_{XY}
+\end{split}
+\]
+
+\subsection*{b)}
 
 % LITERATURA
 
