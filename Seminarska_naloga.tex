@@ -119,13 +119,15 @@ Vzamemo enostavni slučajni vzorec z $n$ enotami in predlagamo 3 možne cenilke
 
 \[ \hat{\tau}_Y ^ {(0)} := N  \bar{Y} \qquad \hat{\tau}_Y ^ {(1)} := \tau_X + N ( \bar{Y} - \bar{X}) \qquad \hat{\tau}_Y ^ {(2)} := \frac{\bar{Y}}{\bar{X}} \tau_X \]
 
+
 \subsection*{a)}
 Dokažimo, da je $\hat{\tau_Y} ^ {(1)}$ nepristranska: $\dashuline{ E(\hat{\tau}_Y ^ {(1)}) = \tau_Y}$ in izračunajmo njeno varianco. Uporabili bomo naslednje oznake. \\
 \\
 $\tau_X$, $\tau_Y$ \ldots vsota vrednosti spremenljivke $X$ oz. $Y$ na celotnem inventarju, \\
 $\mu_X$, $\mu_Y$ \ldots povprečna vrednost $X$ oz. $Y$ na celotnem inventarju, \\
 $\sigma_X$, $\sigma_Y$ \ldots standardni odklon $X$ oz. $Y$ na vseh enotah inventarja, \\
-$\rho_{XY}$ \ldots korelacijski koeficient med $X$ in $Y$ na celotnem inventarju. 
+$\rho_{XY}$ \ldots korelacijski koeficient med $X$ in $Y$ na celotnem inventarju, \\
+$\bar{X}$, $\bar{Y}$ \ldots vzorčno povprečje $X$ oz. $Y$.
 
 
 \[ 
@@ -150,7 +152,39 @@ var(\hat{\tau}_Y ^ {(1)})  & = var(\tau_X + N (\bar{Y} - \bar{X})) \\
 \end{split}
 \]
 
+
 \subsection*{b)}
+Privzamemo, da sta $X$ in $Y - X$ na populacijii neodvisni. Zanima nas, kdaj ima cenilka $\hat{\tau}_Y ^ {(1)}$ nižjo varianco kot cenilka $\hat{\tau}_Y ^ {(0)}$.
+
+\[
+\begin{split}
+var(\hat{\tau}_Y ^ {(0)}) & = var(N \bar{Y}) \\
+                                          & = \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_Y^2
+\end{split}
+\]
+\\
+\[
+\begin{split}
+var(\hat{\tau}_Y ^ {(1)}) & < var(\hat{\tau}_Y ^ {(0)}) \\
+ \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2) - 2 N^2 \rho_{XY} & < \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_Y^2 \\
+ \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2 - 2 N^2 \rho_{XY} & < 0 \\
+ \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2 - 2 \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2 & < 0 \\
+ - \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2  & < 0 \\
+\end{split}
+\]
+
+To je očitno res, saj je $\sigma_X^2 > 0$ in zato $var(\hat{\tau}_Y ^ {(1)}) < var(\hat{\tau}_Y ^ {(0)}) $ velja vedno.
+Zgoraj smo upoštevali še
+\[
+\begin{split}
+cov(\bar{X}, \bar{Y}) & = cov(\bar{X}, \bar{Y} - \bar{X} + \bar{X}) \\
+                                   & = cov(\bar{X}, \bar{Y} - \bar{X}) + cov(\bar{X}, \bar{X}) \\
+                                   & = 0 + var(\bar{X}) \\
+                                   & = \frac{\sigma_X^2}{n} \frac{N - n}{N - 1}
+\end{split}
+\]
+
+
 
 % LITERATURA
 
