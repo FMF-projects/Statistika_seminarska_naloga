@@ -12,7 +12,7 @@ l = 2 * (k_3 - k_1) / n^(1/3);
 i = 0;
 razredi = [0];
 while i < max(podatki)
-    i = i + 0.1;
+    i = i + 0.1; % l~0.1
     razredi = [razredi i];
 end
 figure(1)
@@ -59,3 +59,16 @@ hold off
 %%%%%%%
 % e)
 % histogram in porazdelitvi narisemo na logaritemski lestvici
+m = max(podatki) / l; % število razredov
+x_log = logspace(-1,1,m);
+
+figure(3)
+hold on
+histogram(podatki,x_log,'Normalization','pdf');
+set(gca,'xscale','log');
+y_m_log = gama(x_log,lambda_m,alfa_m);
+y_v_log = gama(x_log,lambda_v,alfa_v);
+plot(x_log, y_m_log)
+plot(x_log, y_v_log)
+hold off
+
