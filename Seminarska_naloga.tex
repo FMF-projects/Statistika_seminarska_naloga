@@ -72,7 +72,7 @@ kjer je $N=43886$ velikost populacije in $\tilde{\sigma}^2$ nepristranska cenilk
 in zato
 \[ se(s) = \sqrt{ \frac{N - n}{N (n - 1)} s (1 - s)} \]
 Upoštevali smo $x_i ^2 = x_i$, kar velja, ker $x_i \in \{0,1\}$. Standardna napaka za izbrani vzorec je $0.029763$. \\
-\\
+\\ % naved knjigo kot vir
 Interval zaupanja dobimo po formuli $s \mp z_\alpha se(s)$. Ker želimo 95\% natančnost, je $z_\alpha = 1.96$ in tako dobimo interval $[0.171662, 0.288337]$.
 
 \subsection*{c)}
@@ -85,7 +85,7 @@ Razlika med vzorčnim in populacijskim deležem znaša $0.018497$, razlika med v
 \subsection*{d)}
 Izberemo še 99 vzorcev, določimo 95\% intervale zaupanja, ter jih narišemo skupaj z intervalom za prvi vzorec. S horizontalno črto označimo vrednost S. Vidimo, da populacijski delež pokrije 96 intervalov.
 
-\includegraphics[scale=0.8]{Figure_1}
+\includegraphics[scale=0.8]{Kibergrad_1}
 
 \subsection*{e)}
 Izračunamo standardni odklon vzorčnih deležev  iz 100 prej izbranih vzorcev. Uporabimo formulo
@@ -106,7 +106,7 @@ Sedaj izberemo 100 vzorcev velikosti 800 in ponovimo postopke iz točk d) in e).
 % teli intervali so mal shady
 % obrazlozitev in primerjava
 
-\includegraphics[scale=0.8]{Figure_2}
+\includegraphics[scale=0.8]{Kibergrad_2}
 
 
 % 2. NALOGA
@@ -183,6 +183,70 @@ cov(\bar{X}, \bar{Y}) & = cov(\bar{X}, \bar{Y} - \bar{X} + \bar{X}) \\
                                    & = \frac{\sigma_X^2}{n} \frac{N - n}{N - 1}
 \end{split}
 \]
+
+
+% 3. NALOGA
+
+\section*{3. naloga}
+
+V datoteki \textit{Kiti.csv} so podani časi $t_1, \ldots, t_{210}$ za 210 kitov. i-ti kit v času $t_i$ preplava 1 km. Nalogo sem reševala s pomočjo programa Matlab, postopek pa se nahaja v datoteki \textit{Kiti.m}.
+
+
+\subsection*{a)}
+Narišemo histogram za dane podatke s pomočjo vgrajene funkcije \textit{histogram}. Širino razredov določimo glede na navodila in dobimo 
+\[ l = \frac{2(q_{3/4} - q_{1/4})}{\sqrt[3]{n}} = 0.1141 \doteq 0.1 \]
+kjer sta $q_{1/4}$, $q_{3/4}$ prvi in tretji kvartil, $n$ pa število podatkov.
+
+\includegraphics[scale=0.8]{Kiti_1}
+\\
+Glede na dobljeni histogram, se porazdelitev gama zdi ustrezna izbira za statistični model.
+
+
+\subsection*{b)}
+Radi bi ocenili parametra $\lambda$ in $\alpha$  porazdelitve $\gamma$ po metodi momentov. Pomagamo si s poglavjem 8.4 v knjigi. Na strani 260 izvemo, da je k-ti moment enak
+\[ \mu_k = E(t^k) \quad k \in \mathbb{N} \]
+kjer je $t$ slučajna spremenljivka. Oceno za $\mu_k$ pa lahko dobimo s pomočjo podanih podatkov kot
+\[ \hat{\mu}_k = \frac{1}{n} \sum_{i=1}^{n} t_i^k \]
+Ker imamo dva neznana parametra bomo potrebovali $\mu_1$ in $\mu_2$ za $\gamma$ porazdelitev. Najdemo ju na strani 263.
+\[ \mu_1 = E(t) = \frac{\alpha}{\lambda} \qquad \mu_2 = E(t^2) = \frac{\alpha (\alpha + 1)}{\lambda^2} \]
+Enačbi preoblikujemo in dobimo predpisa za $\lambda$ in $\alpha$
+\[ \lambda = \frac{\mu_1}{\mu_2 - \mu_1^2} \qquad \alpha = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \]
+Z ocenami za $\mu_1$ in $\mu_2$ dobimo oceni $\hat{\lambda} = 1.3188$ in $\hat{\alpha} = 0.7992$. 
+
+
+\subsection*{c)}
+Ocenimo sedaj  $\lambda$ in $\alpha$ še po metodi največjega verjetja. Logaritemska funkcija verjetja je 
+\[
+\begin{split}
+\ell (\lambda, \alpha | t_1, \ldots, t_n) & = \sum_{i=1}^{n} \log{\gamma(t_i)} \\
+                                                              & = \sum_{i=1}^{n} (\alpha \log{\lambda} + (\alpha - 1) \log{t_i} - \lambda t_i - \log{\Gamma (\alpha)})
+\end{split}
+\]
+Odvajamo $\ell$ in enačimo z 0, da dobimo cenilki za $\lambda$ in $\alpha$
+\[
+\begin{split}
+\frac{\partial \ell}{\partial \lambda} & = \frac{n \alpha}{\lambda} + 0 - \sum_{i=1}^{n} t_i - 0 = 0 \\
+\Rightarrow \qquad \hat{\lambda} & = \frac{n \alpha}{\sum_{i=1}^{n} t_i} \\
+\\
+\frac{\partial \ell}{\partial \alpha} & = n \log{\lambda} + \sum_{i=1}^{n} \log{t_i} - 0 - n \frac{\partial \log{\Gamma (\alpha)}}{\partial \alpha} = 0 \\
+\Rightarrow \qquad 0 & =  n \log{\frac{n \alpha}{\sum_{i=1}^{n} t_i}} + \sum_{i=1}^{n} \log{t_i} - n \psi(\alpha) \\
+\end{split}
+\]
+kjer je $\psi$ funkcija digama, ki je logaritemski odvod funkcije gama. Enačbo za cenilko $\alpha$ rešimo z vgrajeno funkcijo \textit{fzero}, ki sprejme funkcijo, začetni približek in vrne približek za ničlo funkcije, ki je v našem primeru ravno cenilka za $\alpha$. $\hat{\alpha}$ nato vstavimo v enačbo za $\hat{\lambda}$. Dobimo $\hat{\lambda} = 2.6327$ in $\hat{\alpha} = 1.5954$. \\
+\\
+Oceni parametrov se glede na metodo ocenjevanja precej razlikujeta. Navadno je metoda največjega verjetja bolj točna.
+
+
+\subsection*{d)}
+Na histogram dorišemo porazdelitvi $\gamma$ z dobljenimi ocenami za $\lambda$ in $\alpha$. Rdeč graf nam da metoda momentov, rumenega pa metoda največjega verjetja. Porazdelitvi se podatkom ne prilegata najbolje.
+
+\includegraphics[scale=0.8]{Kiti_2}
+
+
+\subsection*{e)}
+Histogram in porazdelitvi narišemo še na logaritemski lestvici. Prileganje porazdelitev podatkom ni bistveno boljše kot prej.
+
+\includegraphics[scale=0.8]{Kiti_3}
 
 
 
