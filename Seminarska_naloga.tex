@@ -89,7 +89,7 @@ Izberemo še 99 vzorcev, določimo 95\% intervale zaupanja, ter jih narišemo sk
 
 \subsection*{e)}
 Izračunamo standardni odklon vzorčnih deležev  iz 100 prej izbranih vzorcev. Uporabimo formulo
-\[ \sigma_s = \sqrt{\frac{1}{m} \sum_{i=1}{m} (s_i - \bar{s})^2} \] 
+\[ \sigma_s = \sqrt{\frac{1}{m} \sum_{i=1}^{m} (s_i - \bar{s})^2} \] 
 kjer je $m=100$ število vzorcev, $s_i$ vzorčni delež i-tega vzorca in $\bar{s}$ povprečje vzorčnih deležev. 
 $\sigma_s = 0.028618$, razlika med populacijsko standardno napako $se(S)$ in $\sigma_s$ pa je 0.026668. 
 % za vzorec velikosti 200?
@@ -118,7 +118,6 @@ Sedaj izberemo 100 vzorcev velikosti 800 in ponovimo postopke iz točk d) in e).
 Vzamemo enostavni slučajni vzorec z $n$ enotami in predlagamo 3 možne cenilke
 
 \[ \hat{\tau}_Y ^ {(0)} := N  \bar{Y} \qquad \hat{\tau}_Y ^ {(1)} := \tau_X + N ( \bar{Y} - \bar{X}) \qquad \hat{\tau}_Y ^ {(2)} := \frac{\bar{Y}}{\bar{X}} \tau_X \]
-
 
 \subsection*{a)}
 Dokažimo, da je $\hat{\tau_Y} ^ {(1)}$ nepristranska: $\dashuline{ E(\hat{\tau}_Y ^ {(1)}) = \tau_Y}$ in izračunajmo njeno varianco. Uporabili bomo naslednje oznake. \\
@@ -151,7 +150,6 @@ var(\hat{\tau}_Y ^ {(1)})  & = var(\tau_X + N (\bar{Y} - \bar{X})) \\
 				&= \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2) - 2 N^2 \rho_{XY}
 \end{split}
 \]
-
 
 \subsection*{b)}
 Privzamemo, da sta $X$ in $Y - X$ na populacijii neodvisni. Zanima nas, kdaj ima cenilka $\hat{\tau}_Y ^ {(1)}$ nižjo varianco kot cenilka $\hat{\tau}_Y ^ {(0)}$.
@@ -191,7 +189,6 @@ cov(\bar{X}, \bar{Y}) & = cov(\bar{X}, \bar{Y} - \bar{X} + \bar{X}) \\
 
 V datoteki \textit{Kiti.csv} so podani časi $t_1, \ldots, t_{210}$ za 210 kitov. i-ti kit v času $t_i$ preplava 1 km. Nalogo sem reševala s pomočjo programa Matlab, postopek pa se nahaja v datoteki \textit{Kiti.m}.
 
-
 \subsection*{a)}
 Narišemo histogram za dane podatke s pomočjo vgrajene funkcije \textit{histogram}. Širino razredov določimo glede na navodila in dobimo 
 \[ l = \frac{2(q_{3/4} - q_{1/4})}{\sqrt[3]{n}} = 0.1141 \doteq 0.1 \]
@@ -200,7 +197,6 @@ kjer sta $q_{1/4}$, $q_{3/4}$ prvi in tretji kvartil, $n$ pa število podatkov.
 \includegraphics[scale=0.8]{Kiti_1}
 \\
 Glede na dobljeni histogram, se porazdelitev gama zdi ustrezna izbira za statistični model.
-
 
 \subsection*{b)}
 Radi bi ocenili parametra $\lambda$ in $\alpha$  porazdelitve $\gamma$ po metodi momentov. Pomagamo si s poglavjem 8.4 v knjigi. Na strani 260 izvemo, da je k-ti moment enak
@@ -212,7 +208,6 @@ Ker imamo dva neznana parametra bomo potrebovali $\mu_1$ in $\mu_2$ za $\gamma$ 
 Enačbi preoblikujemo in dobimo predpisa za $\lambda$ in $\alpha$
 \[ \lambda = \frac{\mu_1}{\mu_2 - \mu_1^2} \qquad \alpha = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \]
 Z ocenami za $\mu_1$ in $\mu_2$ dobimo oceni $\hat{\lambda} = 1.3188$ in $\hat{\alpha} = 0.7992$. 
-
 
 \subsection*{c)}
 Ocenimo sedaj  $\lambda$ in $\alpha$ še po metodi največjega verjetja. Logaritemska funkcija verjetja je 
@@ -236,7 +231,6 @@ kjer je $\psi$ funkcija digama, ki je logaritemski odvod funkcije gama. Enačbo 
 \\
 Oceni parametrov se glede na metodo ocenjevanja precej razlikujeta. Navadno je metoda največjega verjetja bolj točna.
 
-
 \subsection*{d)}
 Na histogram dorišemo porazdelitvi $\gamma$ z dobljenimi ocenami za $\lambda$ in $\alpha$. Rdeč graf nam da metoda momentov, rumenega pa metoda največjega verjetja. Porazdelitvi se podatkom ne prilegata najbolje.
 
@@ -248,6 +242,34 @@ Histogram in porazdelitvi narišemo še na logaritemski lestvici. Prileganje por
 
 \includegraphics[scale=0.8]{Kiti_3}
 
+
+% 4. NALOGA
+
+\section*{4. naloga}
+
+V datoteki \textit{TempPulz.csv} so podatki o telesni temperaturi in številu srčnih utripov na minuto za 65 moških in 65 žensk. Temperatura in utripi so porazdeljeni normalno. Nalogo sem reševala s pomočjo programa Matlab, postopek pa se nahaja v datoteki \textit{TempPulz.m}.
+
+\subsection*{a)}
+Oceniti želimo povprečja in standardne odklone za oba telesna parametra moških in žensk. Ocene bomo konstruirali na podlagi danih podatkov. Ločimo jih glede na spol, ter za obe skupini izračunamo povprečje in standardni odklon temperature in števila utripov.
+Dobimo naslednje rezultate:
+\begin{itemize}
+\item povprečna temperatura moških je 98.1046$^{\circ}F$, žensk pa 98.3938$^{\circ}F$,
+\item povprečni pulz moških je 73.3692, žensk pa 74.1538 utripov na minuto,
+\item standardni odklon temperature pri moških je 0.6934$^{\circ}F$ in pri ženskah 0.7377$^{\circ}F$,
+\item standardni odklon srčnega utripa pri moških je 5.8298 in pri ženskah 8.0426 udarcev na minuto. 
+\end{itemize}
+
+\subsection*{b)}
+Za prej dobljena povprečja določimo 95\% interval zaupanja, kar pomeni, da je $z_\alpha = 1.96$ in dobimo naslednje intervale zaupanja:
+\begin{itemize}
+\item temperatura moških [96.7456, 99.4636],
+\item temperatura žensk [96.9479, 99.8398],
+\item srčni utrip moških [61.9428, 84.7957],
+\item srčni utrip žensk [58.3903, 89.9174].
+\end{itemize}
+
+\subsection*{c)}
+Trdimo, da je povprečna telesna temperatura 98.6$^{\circ}F$ oziroma 37$^{\circ}C$. Interval zaupanja za temperaturo moških to vrednost vsebuje in prav tako interval za temperaturo žensk, zato lahko rečemo, da je trditev v skladu z izmerjenimi temperaturami.
 
 
 % LITERATURA
