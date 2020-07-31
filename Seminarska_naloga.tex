@@ -272,6 +272,57 @@ Za prej dobljena povprečja določimo 95\% interval zaupanja, kar pomeni, da je 
 Trdimo, da je povprečna telesna temperatura 98.6$^{\circ}F$ oziroma 37$^{\circ}C$. Interval zaupanja za temperaturo moških to vrednost vsebuje in prav tako interval za temperaturo žensk, zato lahko rečemo, da je trditev v skladu z izmerjenimi temperaturami.
 
 
+% 5. NALOGA
+
+\section*{5. naloga}
+$X$ in $Y$ slučajni spremenljivki za kateri velja:
+\[ E(X) = \mu_x \qquad E(Y) = \mu_y \qquad var(X) = \sigma_x^2 \qquad var(Y) = \sigma_y^2 \qquad cov(X,Y) = \sigma_{x,y} \]
+Denimo, da opazimo $X$ in želimo napovedati $Y$.
+
+\subsection*{a)}
+Poiskati želimo napoved oblike $\hat{Y} = \alpha + \beta X$, kjer sta $\alpha$ in $\beta$ taki, da je srednja kvadratična napaka $E( (Y - \hat{Y})^2 )$ minimalna. 
+
+\[
+\begin{split}
+E( (Y - \hat{Y})^2 ) & = (E(Y) - E(\hat{Y}) )^2 + var(Y - \hat{Y}) \\
+                                    & = ( \mu_y - E(\alpha + \beta X) )^2 + var(Y) + var(\hat{Y}) - 2cov(Y,\hat{Y}) \\
+                                    & = ( \mu_y - \alpha - \beta \mu_x) ^2 + \sigma_y^2 + var(\alpha + \beta X) - 2(cov(Y, \alpha) + cov(Y,\beta X)) \\
+                                    & = \mu_y^2 + \alpha^2 + \beta^2 \mu_x^2 - 2 \mu_y \alpha - 2 \beta \mu_x \mu_y + 2 \alpha \beta \mu_x + \sigma_y^2 + \beta^2 \sigma_x^2 - 2 \beta \sigma_{x,y}
+\end{split}
+\]
+Dobljeni izraz odvajamo po $\alpha$ in $\beta$ ter enačimo z 0
+\[
+\begin{split}
+\frac{\partial E( (Y - \hat{Y})^2 )}{\partial \alpha} & = 2 \alpha - 2 \mu_y + 2 \beta \mu_x = 0 \\
+\Rightarrow \qquad                                       \alpha & = \mu_y - \beta \mu_x \\
+\\
+\frac{\partial E( (Y - \hat{Y})^2 )}{\partial \beta} & = 2 \beta \mu_x^2 - 2 \mu_x \mu_y + 2 \alpha \mu_x + 2 \beta \sigma_x^2 - 2 \sigma_{x,y} = 0 \\
+\Rightarrow \qquad                                       \beta & = \frac{\mu_x \mu_y - \alpha \mu_x + \sigma_{x,y}}{\mu_x^2 + \sigma_x^2}
+\end{split}
+\]
+Enačbo za $\alpha$ vstavimo v enačbo za $\beta$ ali obratno in dobimo
+\[ \alpha = \mu_y - \frac{\sigma_{x,y} \mu_x}{\sigma_x^2} \qquad \beta = \frac{\sigma_{x,y}}{\sigma_x^2} \]
+kar pomeni, da je napoved oblike
+\[ Y = \mu_y + \frac{\sigma_{x,y}}{\sigma_x^2} (X - \mu_x) \]
+
+\subsection*{b)}
+Pokažimo, da se pri tako izbranih $\alpha$ in $\beta$ determinacijski koeficient izraža v obliki:
+\[ r_{x,y}^2 = 1 - \frac{var(Y - \hat{Y})}{var(Y)} \]
+Determinacijski koeficient je kvadrat korelacijskega koeficienta $r$, ta pa je definiran kot
+\[ r_{x,y} = \frac{\sigma_{x,y}}{\sigma_x \sigma_y} \]
+\\
+\[
+\begin{split}
+1 - \frac{var(Y - \hat{Y})}{var(Y)} & = \frac{var(Y) - var(Y) - var(\hat{Y}) + 2cov(Y,\hat{Y})}{var(Y)} \\
+                                                        & = \frac{2 \beta cov(Y,X) - var(\alpha + \beta X)}{var(Y)} \\
+                                                        & = \frac{2 \beta \sigma_{x,y} - \beta^2 \sigma_x^2}{\mu_y^2} \\
+                                                        & = \frac{2 \frac{\sigma_{x,y}}{\sigma_x^2} \sigma_{x,y} - ( \frac{\sigma_{x,y}}{\sigma_x^2} )^2  \sigma_x^2}{\mu_y^2} \\
+                                                        & = \frac{2 \frac{\sigma_{x,y}^2}{\sigma_x^2} -  \frac{\sigma_{x,y}^2}{\sigma_x^2}}{\sigma_y^2} \\
+                                                        & = \frac{\sigma_{x,y}^2}{\sigma_x^2 \sigma_y^2} \\
+                                                        & = r_{x,y}^2
+\end{split}
+\]
+
 % LITERATURA
 
 \begin{thebibliography}{9}
