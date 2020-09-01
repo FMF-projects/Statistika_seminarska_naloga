@@ -46,8 +46,8 @@ for i in range(N):
         izobrazba[i] = 1
     else:
         izobrazba[i] = 0
-    pop_var += (izobrazba[i] - pop_delez) ** 2 / (N**2)
-stand_napaka = math.sqrt(pop_var)
+    pop_var += (izobrazba[i] - pop_delez) ** 2
+stand_napaka = math.sqrt(pop_var / N**2)
 
 print('c) Standardna napaka deleža v populaciji je ' + str(stand_napaka))
 
@@ -102,8 +102,10 @@ for i in range(m):
     stand_odklon += (delezi[i] - povp_delez_vzorcev) ** 2
 stand_odklon = math.sqrt(stand_odklon / m)
 
+prava_stand_napaka_vzorca_200 = math.sqrt( (N-n) / (n-1) / N * pop_delez * (1-pop_delez) )
+
 print('e) Standardni odklon vzorčnih deležev je ' + str(stand_odklon))
-print('e) Razlika med pravo standardno napako in odklonom vzorčnih deležev je ' + str(abs(stand_odklon - stand_napaka)))
+print('e) Razlika med pravo standardno napako za vzorec 200 in odklonom vzorčnih deležev je ' + str(abs(stand_odklon - prava_stand_napaka_vzorca_200)))
 
 
 ###############
@@ -136,9 +138,11 @@ for i in range(m):
     stand_odklon += (delezi[i] - povp_delez_vzorcev) ** 2
 stand_odklon = math.sqrt(stand_odklon / m)
 
+prava_stand_napaka_vzorca_800 = math.sqrt( (N-n) / (n-1) / N * pop_delez * (1-pop_delez) )
+
 print('f) ' + str(j) + ' intervalov pokrije populacijski delež.')
 print('f) Standardni odklon vzorčnih deležev je ' + str(stand_odklon))
-print('f) Razlika med pravo standardno napako in odklonom vzorčnih deležev je ' + str(abs(stand_odklon - stand_napaka)))
+print('f) Razlika med pravo standardno napako vzorca 800 in odklonom vzorčnih deležev je ' + str(abs(stand_odklon - prava_stand_napaka_vzorca_800)))
 
 plt.figure()
 plt.errorbar(list(range(1,m+1)), delezi, xerr=0, yerr=delta, fmt='none')

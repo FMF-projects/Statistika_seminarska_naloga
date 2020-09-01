@@ -7,7 +7,7 @@ podatki = table2array(podatki);
 n = length(podatki);
 k_1 = quantile(podatki, 0.25);
 k_3 = quantile(podatki, 0.75);
-l = 2 * (k_3 - k_1) / n^(1/3);
+l = 2 * (k_3 - k_1) / n^(1/3)
 
 i = 0;
 razredi = [0];
@@ -37,8 +37,8 @@ lambda_m = mi_1 / (mi_2 - mi_1^2);
 lambda = @(alfa) n * alfa / sum(podatki);
 dl_alfa = @(alfa) n*log(lambda(alfa)) + sum(log(podatki)) - n*psi(alfa);
 
-alfa_v = fzero(dl_alfa, 1);
-lambda_v = lambda(alfa_v);
+alfa_v = fzero(dl_alfa, 1)
+lambda_v = lambda(alfa_v)
 
 
 %%%%%%%

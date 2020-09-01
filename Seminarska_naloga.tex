@@ -35,6 +35,7 @@
 	
 \end{titlepage}
 
+\noindent
 Podrobnejša navodila nalog se nahajajo v datoteki \textit{27\_sem\_nal\_Klementina\_Pirc.pdf}
 
 % 1. NALOGA
@@ -45,7 +46,7 @@ V datoteki \textit{Kibergrad.csv} so podane informacije o 43 886 družinah. Spod
 
 \subsection*{a)}
 Na podlagi enostavnega slučajnega vzorca 200 družin poiščemo oceno za delež družin v celotni populaciji, katerih vodja gospodinjstva nima srednješolske izobrazbe. S pomočjo opisov stopenj izobrazbe ugotovimo, da moramo prešteti družine iz vzorca s stopnjo $<= 38$. Naj bo $d_i$ stopnja izobrazbe za i-to družino, definiramo 
-\[x_i = \left \{
+\[I_i = \left \{
 	\begin{array}{ll}
 		1  & \mbox{če } d_i \leq 38 \\
 		0 & \mbox{sicer}
@@ -53,37 +54,38 @@ Na podlagi enostavnega slučajnega vzorca 200 družin poiščemo oceno za delež
 	\right.
 \]
 Sedaj lahko vzorčni delež $s$ izračunamo s formulo
-\[ s = \frac{1}{n} \sum_{i=1}^{n} x_i \]
-kjer je $n$ velikost vzorca, torej 200. Dobimo rezultat $s = 0.23$.  
+\[ s = \frac{1}{n} \sum_{i=1}^{n} I_i \]
+kjer je $n$ velikost vzorca, torej 200. Dobimo rezultat $s = 0.23$, kar pomeni, da ocenjujemo delež v populaciji z opisano lastnostjo s 23 \%.
 
 \subsection*{b)}
-Ocenimo standardno napako $se(s)$ in določimo 95\% interval zaupanja. Za izračun standardne napake moramo izračunati varianco $s$. Ker smo vzeli enostavni slučajno vzorec velja
+Ocenimo standardno napako $se(s)$ in določimo 95\% interval zaupanja. Za izračun standardne napake moramo izračunati varianco $s$. Ker smo vzeli enostavni slučajni vzorec velja
 \[ var(s) = \frac{1}{n} \frac{N - n}{N - 1} \tilde{\sigma}^2 \]
 kjer je $N=43886$ velikost populacije in $\tilde{\sigma}^2$ nepristranska cenilka za populacijsko varianco. Torej
 \[ 
 \begin{split}
-\tilde{\sigma}^2 = \frac{N - 1}{N (n - 1)} \sum_{i=1}^{n} (x_i - s)^2 \\
-\Rightarrow var(s) & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (x_i - s)^2 \\
-		         & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (x_i^2 - 2x_i s + s^2) \\
-		         & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (x_i - 2x_i s + s^2) \\
+\tilde{\sigma}^2 = \frac{N - 1}{N (n - 1)} \sum_{i=1}^{n} (I_i - s)^2 \\
+\Rightarrow var(s) & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (I_i - s)^2 \\
+		         & = \frac{N - n}{n N (n - 1)} \sum_{i=1}^{n} (I_i^2 - 2 I_i s + s^2) \\
+		         & = \frac{N - n}{N (n - 1)} \left ( \frac{1}{n} \sum_{i=1}^{n} I_i +  \frac{2 s}{n} \sum_{i=1}^{n} I_i + \frac{1}{n} \sum_{i=1}^{n} s^2 \right ) \\
+		         & = \frac{N - n}{N (n - 1)} (s - 2 s^2 + s^2) \\
 		         & = \frac{N - n}{N (n - 1)} (s - s^2)
 \end{split}
 \]
 in zato
 \[ se(s) = \sqrt{ \frac{N - n}{N (n - 1)} s (1 - s)} \]
-Upoštevali smo $x_i ^2 = x_i$, kar velja, ker $x_i \in \{0,1\}$. Standardna napaka za izbrani vzorec je $0.029763$. \\
-\\ % naved knjigo kot vir
+Upoštevali smo $I_i ^2 = I_i$, kar velja, ker $I_i \in \{0,1\}$. Standardna napaka za izbrani vzorec je $0.029763$. \\
+\\
 Interval zaupanja dobimo po formuli $s \mp z_\alpha se(s)$. Ker želimo 95\% natančnost, je $z_\alpha = 1.96$ in tako dobimo interval $[0.171662, 0.288337]$.
 
 \subsection*{c)}
 Izračunamo populacijski delež $S$ in standardno napako $se(S)$ s formulama
-\[ S = \frac{1}{N} \sum_{i=1}^{N} x_i  \qquad se(S) = \sqrt{\frac{\sigma ^2}{N}} = \sqrt{\frac{1}{N^2} \sum_{i=1}^{N} (x_i - S)^2} \]
-ter dobimo $S=0.211502$ in $se(S)=0.001949$. Interval zaupanja torej pokrije populacijski delež, saj $S \in [0.171662, 0.288337]$. \\
+\[ S = \frac{1}{N} \sum_{i=1}^{N} I_i  \qquad se(S) = \sqrt{\frac{\sigma^2}{N}} =  \sqrt{\frac{1}{N^2} \sum_{i=1}^{N} (I_i - S)^2} \]
+ter dobimo $S=0.211502$ in $se(S)= 0.001949$. Interval zaupanja torej pokrije populacijski delež, saj $S \in [0.171662, 0.288337]$. \\
 \\
 Razlika med vzorčnim in populacijskim deležem znaša $0.018497$, razlika med vzorčno in populacijsko standardno napako pa $0.027814$.
 
 \subsection*{d)}
-Izberemo še 99 vzorcev, določimo 95\% intervale zaupanja, ter jih narišemo skupaj z intervalom za prvi vzorec. S horizontalno črto označimo vrednost S. Vidimo, da populacijski delež pokrije 96 intervalov.
+Izberemo še 99 vzorcev, določimo 95\% intervale zaupanja, ter jih narišemo skupaj z intervalom za prvi vzorec. S horizontalno črto označimo vrednost S. Vidimo, da populacijski delež pokrije 93 intervalov.
 
 \includegraphics[scale=0.8]{Kibergrad_1}
 
@@ -91,23 +93,23 @@ Izberemo še 99 vzorcev, določimo 95\% intervale zaupanja, ter jih narišemo sk
 Izračunamo standardni odklon vzorčnih deležev  iz 100 prej izbranih vzorcev. Uporabimo formulo
 \[ \sigma_s = \sqrt{\frac{1}{m} \sum_{i=1}^{m} (s_i - \bar{s})^2} \] 
 kjer je $m=100$ število vzorcev, $s_i$ vzorčni delež i-tega vzorca in $\bar{s}$ povprečje vzorčnih deležev. 
-$\sigma_s = 0.028618$, razlika med populacijsko standardno napako $se(S)$ in $\sigma_s$ pa je 0.026668. 
-% za vzorec velikosti 200?
+$\sigma_s = 0.029518$, razlika med pravo standardno napako za vzorec velikosti 200 in $\sigma_s$ pa je $0.000635$.
 
 \newpage
 
 \subsection*{f)}
 Sedaj izberemo 100 vzorcev velikosti 800 in ponovimo postopke iz točk d) in e).
 \begin{itemize}
-\item $\sigma_s = 0.013002$
-\item $| \sigma_s - se(S) | = 0.011053$
+\item $\sigma_s = 0.014229$
+\item razlika med pravo standardno napako za vzorec 800 in $\sigma_s$ je $0.000085$
 \item populacijski delež S pokrije 95 intervalov zaupanja
 \end{itemize}
-% teli intervali so mal shady
-% obrazlozitev in primerjava
 
 \includegraphics[scale=0.8]{Kibergrad_2}
+%
+Vidimo, da se $\sigma_s$ za vzorce velikosti 800 bolj približa populacijski standardni napaki kot pa $\sigma_s$ za vzorce velikosti 200. To ustreza teoriji vzorčenja, ki pravi, da z večjim številom podatkov oziroma večjim vzorcem dobimo bolj točen rezultat. 
 
+\newpage
 
 % 2. NALOGA
 
@@ -125,8 +127,10 @@ Dokažimo, da je $\hat{\tau_Y} ^ {(1)}$ nepristranska: $\dashuline{ E(\hat{\tau}
 $\tau_X$, $\tau_Y$ \ldots vsota vrednosti spremenljivke $X$ oz. $Y$ na celotnem inventarju, \\
 $\mu_X$, $\mu_Y$ \ldots povprečna vrednost $X$ oz. $Y$ na celotnem inventarju, \\
 $\sigma_X$, $\sigma_Y$ \ldots standardni odklon $X$ oz. $Y$ na vseh enotah inventarja, \\
-$\rho_{XY}$ \ldots korelacijski koeficient med $X$ in $Y$ na celotnem inventarju, \\
-$\bar{X}$, $\bar{Y}$ \ldots vzorčno povprečje $X$ oz. $Y$.
+$\rho_{X,Y}$ \ldots korelacijski koeficient med $X$ in $Y$ na celotnem inventarju, \\
+$\bar{X}$, $\bar{Y}$ \ldots vzorčno povprečje $X$ oz. $Y$. \\
+\\
+Korelacijski koeficient je definiran kot $\rho_{X,Y} = \frac{\sigma_{X,Y}}{\sigma_X \sigma_Y}$, kjer je $\sigma_{X,Y} = cov(X,Y)$.
 
 
 \[ 
@@ -145,14 +149,18 @@ E(\hat{\tau}_Y ^ {(1)}) & = E(\tau_X + N (\bar{Y} - \bar{X})) \\
 \begin{split}
 var(\hat{\tau}_Y ^ {(1)})  & = var(\tau_X + N (\bar{Y} - \bar{X})) \\
 				& = N^2 var( \bar{Y} - \bar{X} ) \\
-				& = N^2 var( \bar{Y} + \bar{X} - 2 cov(\bar{Y},\bar{X}) ) \\
-				& = N^2 ( \frac{\sigma_Y^2}{n} \frac{N - n}{N - 1} + \frac{\sigma_X^2}{n} \frac{N - n}{N - 1} - 2\rho_{XY} ) \\
-				&= \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2) - 2 N^2 \rho_{XY}
+				& = N^2 \left ( var(\bar{Y}) + var(\bar{X}) - 2 cov(\bar{Y},\bar{X}) \right ) \\
+				& = N^2 \left ( \frac{\sigma_Y^2}{n} \frac{N - n}{N - 1} + \frac{\sigma_X^2}{n} \frac{N - n}{N - 1} -  2  \frac{\sigma_{X,Y}}{n} \frac{N - n}{N - 1} \right ) \\
+				&= \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2 - 2 \rho_{X,Y} \sigma_X \sigma_Y)
 \end{split}
+\]
+Pri izračunih $var(\bar{X})$, $var(\bar{Y})$ in $cov(\bar{X},\bar{Y})$ upoštevamo, da smo izbrali enostavni slučajni vzorec. Formulo za $cov(\bar{X},\bar{Y})$ najdemo v knjigi na strani 221.
+\[
+cov(\bar{X},\bar{Y}) = \frac{\sigma_{X,Y}}{n} \frac{N - n}{N - 1}
 \]
 
 \subsection*{b)}
-Privzamemo, da sta $X$ in $Y - X$ na populacijii neodvisni. Zanima nas, kdaj ima cenilka $\hat{\tau}_Y ^ {(1)}$ nižjo varianco kot cenilka $\hat{\tau}_Y ^ {(0)}$.
+Privzamemo, da sta $X$ in $Y - X$ na populaciji neodvisni. Zanima nas, kdaj ima cenilka $\hat{\tau}_Y ^ {(1)}$ nižjo varianco kot cenilka $\hat{\tau}_Y ^ {(0)}$.
 
 \[
 \begin{split}
@@ -164,24 +172,47 @@ var(\hat{\tau}_Y ^ {(0)}) & = var(N \bar{Y}) \\
 \[
 \begin{split}
 var(\hat{\tau}_Y ^ {(1)}) & < var(\hat{\tau}_Y ^ {(0)}) \\
- \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2) - 2 N^2 \rho_{XY} & < \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_Y^2 \\
- \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2 - 2 N^2 \rho_{XY} & < 0 \\
- \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2 - 2 \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2 & < 0 \\
+ \frac{N^2}{n} \frac{N - n}{N - 1} (\sigma_Y^2 + \sigma_X^2 - 2 \rho_{X,Y} \sigma_X \sigma_Y) & < \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_Y^2 \\
+ \frac{N^2}{n} \frac{N - n}{N - 1} ( \sigma_X^2 - 2 \frac{cov(X,Y)}{\sigma_X \sigma_Y} \sigma_X \sigma_Y ) & < 0 \\
+ \frac{N^2}{n} \frac{N - n}{N - 1} ( \sigma_X^2 - 2 \sigma_X^2 ) & < 0 \\
  - \frac{N^2}{n} \frac{N - n}{N - 1} \sigma_X^2  & < 0 \\
 \end{split}
 \]
-
-To je očitno res, saj je $\sigma_X^2 > 0$ in zato $var(\hat{\tau}_Y ^ {(1)}) < var(\hat{\tau}_Y ^ {(0)}) $ velja vedno.
+%
+Ker je $\sigma_X^2 > 0$ in $N > n$ bo zgornja neenakost vedno resnična, kar pomeni, da ima cenilka $\hat{\tau}_Y ^ {(1)}$ vedno nižjo varianco kot $\hat{\tau}_Y ^ {(0)}$.
 Zgoraj smo upoštevali še
 \[
 \begin{split}
-cov(\bar{X}, \bar{Y}) & = cov(\bar{X}, \bar{Y} - \bar{X} + \bar{X}) \\
-                                   & = cov(\bar{X}, \bar{Y} - \bar{X}) + cov(\bar{X}, \bar{X}) \\
-                                   & = 0 + var(\bar{X}) \\
-                                   & = \frac{\sigma_X^2}{n} \frac{N - n}{N - 1}
+cov(X, Y) & = cov(X, Y -  X +  X) \\
+                & = cov(X, Y -  X) + cov(X, X) \\
+                & = 0 + var(X) \\
 \end{split}
 \]
 
+\subsection*{c)}
+
+Privzamemo, da sta $X$ in $\frac{Y}{X}$ na populaciji neodvisni. Zanima nas, kdaj ima cenilka $\hat{\tau}_Y ^ {(2)}$ asimptotično nižjo varianco kot cenilka $\hat{\tau}_Y ^ {(0)}$. Za izračun asimptotične variance $\hat{\tau}_Y ^ {(2)}$ si pomagamo s poglavjem $7.4$ v knjigi.
+
+\[
+\begin{split}
+var(\hat{\tau}_Y ^ {(2)})  & = var( \frac{\bar{Y}}{\bar{X}} \tau_X ) \\
+                                           & = \tau_X^2 var( \frac{\bar{Y}}{\bar{X}} ) \\
+                                           & = N^2 \mu_X^2 \frac{1}{\mu_X^2} \frac{1}{n} \frac{N - n}{N - 1} (\frac{\mu_Y^2}{\mu_X^2} \sigma_X^2 + \sigma_Y^2 - 2 \frac{\mu_Y}{\mu_X} \sigma_{X,Y} ) \\
+                                           & = \frac{N^2}{n} \frac{N - n}{N - 1} (\frac{\mu_Y^2}{\mu_X^2} \sigma_X^2 + \sigma_Y^2 - 2 \frac{\mu_Y}{\mu_X} \sigma_{X,Y} )
+\end{split}
+\]
+%
+Zanima nas, kdaj je izpolnjena naslednja neenakost
+\[
+\begin{split}
+\frac{var(\hat{\tau}_Y ^ {(2)})}{var(\hat{\tau}_Y ^ {(0)})} & < 1 \\
+\frac{ \frac{N^2}{n} \frac{N - n}{N - 1} (\frac{\mu_Y^2}{\mu_X^2} \sigma_X^2 + \sigma_Y^2 - 2 \frac{\mu_Y}{\mu_X} \sigma_{X,Y} )}{\frac{N^2}{n} \frac{N - n}{N - 1} \sigma_Y^2} & < 1 \\
+\frac{\mu_Y^2}{\mu_X^2} \frac{\sigma_X^2}{\sigma_Y^2} + 1 - 2 \frac{\mu_Y}{\mu_X} \frac{\rho_{X,Y} \sigma_X \sigma_Y}{\sigma_Y^2} & < 1 \\
+\frac{\mu_Y^2}{\mu_X^2} \frac{\sigma_X^2}{\sigma_Y^2} - 2 \frac{\mu_Y}{\mu_X} \frac{\rho_{X,Y} \sigma_X}{\sigma_Y} & < 0 \\
+\frac{\mu_Y}{\mu_X} \frac{\sigma_X}{\sigma_Y} \left ( \frac{\mu_Y}{\mu_X} \frac{\sigma_X}{\sigma_Y} - 2 \rho_{X,Y} \right )  & < 0 \\ 
+\end{split}
+\]
+$\mu_X$, $\sigma_X$ in $\sigma_Y$ so večje od 0 torej je neenakost izpolnjena, če je $\frac{\mu_Y}{\mu_X} \frac{\sigma_X}{\sigma_Y} < 2 \rho_{X,Y}$ in hkrati $\mu_Y, \rho_{X,Y} > 0$ ali $\mu_Y, \rho_{X,Y} < 0$. 
 
 % 3. NALOGA
 
@@ -199,11 +230,11 @@ kjer sta $q_{1/4}$, $q_{3/4}$ prvi in tretji kvartil, $n$ pa število podatkov.
 Glede na dobljeni histogram, se porazdelitev gama zdi ustrezna izbira za statistični model.
 
 \subsection*{b)}
-Radi bi ocenili parametra $\lambda$ in $\alpha$  porazdelitve $\gamma$ po metodi momentov. Pomagamo si s poglavjem 8.4 v knjigi. Na strani 260 izvemo, da je k-ti moment enak
+Radi bi ocenili parametra $\lambda$ in $\alpha$  porazdelitve $gama$ po metodi momentov. Pomagamo si s poglavjem 8.4 v knjigi. Na strani 260 izvemo, da je k-ti moment enak
 \[ \mu_k = E(t^k) \quad k \in \mathbb{N} \]
 kjer je $t$ slučajna spremenljivka. Oceno za $\mu_k$ pa lahko dobimo s pomočjo podanih podatkov kot
 \[ \hat{\mu}_k = \frac{1}{n} \sum_{i=1}^{n} t_i^k \]
-Ker imamo dva neznana parametra bomo potrebovali $\mu_1$ in $\mu_2$ za $\gamma$ porazdelitev. Najdemo ju na strani 263.
+Ker imamo dva neznana parametra bomo potrebovali $\mu_1$ in $\mu_2$ za $gama$ porazdelitev. Najdemo ju na strani 263.
 \[ \mu_1 = E(t) = \frac{\alpha}{\lambda} \qquad \mu_2 = E(t^2) = \frac{\alpha (\alpha + 1)}{\lambda^2} \]
 Enačbi preoblikujemo in dobimo predpisa za $\lambda$ in $\alpha$
 \[ \lambda = \frac{\mu_1}{\mu_2 - \mu_1^2} \qquad \alpha = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \]
@@ -213,8 +244,8 @@ Z ocenami za $\mu_1$ in $\mu_2$ dobimo oceni $\hat{\lambda} = 1.3188$ in $\hat{\
 Ocenimo sedaj  $\lambda$ in $\alpha$ še po metodi največjega verjetja. Logaritemska funkcija verjetja je 
 \[
 \begin{split}
-\ell (\lambda, \alpha | t_1, \ldots, t_n) & = \sum_{i=1}^{n} \log{\gamma(t_i)} \\
-                                                              & = \sum_{i=1}^{n} (\alpha \log{\lambda} + (\alpha - 1) \log{t_i} - \lambda t_i - \log{\Gamma (\alpha)})
+\ell (\lambda, \alpha | t_1, \ldots, t_n) & = \log{\prod_{i=1}^{n} \frac{\lambda^\alpha t_i^{\alpha - 1} e^{- \lambda t_i}}{\Gamma (\alpha)}} \\
+                                                              & = \sum_{i=1}^{n} (\alpha \log{\lambda} + (\alpha - 1) \log{t_i} - \lambda t_i - \log{\Gamma (\alpha)}) \\
 \end{split}
 \]
 Odvajamo $\ell$ in enačimo z 0, da dobimo cenilki za $\lambda$ in $\alpha$
@@ -227,12 +258,12 @@ Odvajamo $\ell$ in enačimo z 0, da dobimo cenilki za $\lambda$ in $\alpha$
 \Rightarrow \qquad 0 & =  n \log{\frac{n \alpha}{\sum_{i=1}^{n} t_i}} + \sum_{i=1}^{n} \log{t_i} - n \psi(\alpha) \\
 \end{split}
 \]
-kjer je $\psi$ funkcija digama, ki je logaritemski odvod funkcije gama. Enačbo za cenilko $\alpha$ rešimo z vgrajeno funkcijo \textit{fzero}, ki sprejme funkcijo, začetni približek in vrne približek za ničlo funkcije, ki je v našem primeru ravno cenilka za $\alpha$. $\hat{\alpha}$ nato vstavimo v enačbo za $\hat{\lambda}$. Dobimo $\hat{\lambda} = 2.6327$ in $\hat{\alpha} = 1.5954$. \\
+kjer je $\psi$ funkcija $digama$, ki je logaritemski odvod funkcije $gama$. Enačbo za cenilko $\alpha$ rešimo z vgrajeno funkcijo \textit{fzero}, ki sprejme funkcijo, začetni približek in vrne približek za ničlo funkcije, ki je v našem primeru ravno cenilka za $\alpha$. $\hat{\alpha}$ nato vstavimo v enačbo za $\hat{\lambda}$. Dobimo $\hat{\lambda} = 2.6327$ in $\hat{\alpha} = 1.5954$. \\
 \\
 Oceni parametrov se glede na metodo ocenjevanja precej razlikujeta. Navadno je metoda največjega verjetja bolj točna.
 
 \subsection*{d)}
-Na histogram dorišemo porazdelitvi $\gamma$ z dobljenimi ocenami za $\lambda$ in $\alpha$. Rdeč graf nam da metoda momentov, rumenega pa metoda največjega verjetja. Porazdelitvi se podatkom ne prilegata najbolje.
+Na histogram dorišemo porazdelitvi $gama$ z dobljenimi ocenami za $\lambda$ in $\alpha$. Rdeč graf nam da metoda momentov, rumenega pa metoda največjega verjetja. Porazdelitvi se podatkom ne prilegata najbolje.
 
 \includegraphics[scale=0.8]{Kiti_2}
 
@@ -303,7 +334,7 @@ Dobljeni izraz odvajamo po $\alpha$ in $\beta$ ter enačimo z 0
 Enačbo za $\alpha$ vstavimo v enačbo za $\beta$ ali obratno in dobimo
 \[ \alpha = \mu_y - \frac{\sigma_{x,y} \mu_x}{\sigma_x^2} \qquad \beta = \frac{\sigma_{x,y}}{\sigma_x^2} \]
 kar pomeni, da je napoved oblike
-\[ Y = \mu_y + \frac{\sigma_{x,y}}{\sigma_x^2} (X - \mu_x) \]
+\[ Y = \mu_y - \frac{\sigma_{x,y}}{\sigma_x^2} \mu_x + \frac{\sigma_{x,y}}{\sigma_x^2} X  \]
 
 \subsection*{b)}
 Pokažimo, da se pri tako izbranih $\alpha$ in $\beta$ determinacijski koeficient izraža v obliki:
@@ -315,8 +346,8 @@ Determinacijski koeficient je kvadrat korelacijskega koeficienta $r$, ta pa je d
 \begin{split}
 1 - \frac{var(Y - \hat{Y})}{var(Y)} & = \frac{var(Y) - var(Y) - var(\hat{Y}) + 2cov(Y,\hat{Y})}{var(Y)} \\
                                                         & = \frac{2 \beta cov(Y,X) - var(\alpha + \beta X)}{var(Y)} \\
-                                                        & = \frac{2 \beta \sigma_{x,y} - \beta^2 \sigma_x^2}{\mu_y^2} \\
-                                                        & = \frac{2 \frac{\sigma_{x,y}}{\sigma_x^2} \sigma_{x,y} - ( \frac{\sigma_{x,y}}{\sigma_x^2} )^2  \sigma_x^2}{\mu_y^2} \\
+                                                        & = \frac{2 \beta \sigma_{x,y} - \beta^2 \sigma_x^2}{\sigma_y^2} \\
+                                                        & = \frac{2 \frac{\sigma_{x,y}}{\sigma_x^2} \sigma_{x,y} - ( \frac{\sigma_{x,y}}{\sigma_x^2} )^2  \sigma_x^2}{\sigma_y^2} \\
                                                         & = \frac{2 \frac{\sigma_{x,y}^2}{\sigma_x^2} -  \frac{\sigma_{x,y}^2}{\sigma_x^2}}{\sigma_y^2} \\
                                                         & = \frac{\sigma_{x,y}^2}{\sigma_x^2 \sigma_y^2} \\
                                                         & = r_{x,y}^2
@@ -326,11 +357,10 @@ Determinacijski koeficient je kvadrat korelacijskega koeficienta $r$, ta pa je d
 % LITERATURA
 
 \begin{thebibliography}{9}
-\bibitem{veriznica}
-	E. Zakrajšek, \emph{Verižnica} (1999) od 6 do 10.
-	Dostopno na spletni učilnici FMF 2019/2020 predmeta Matematično modeliranje [22. 7. 2020]
+\bibitem{knjiga}
+	J. Rice, \emph{Mathematical Statistics and Data Analysis}, Third Edition, Duxbury, Belmont, 2007.
 \bibitem{zapiski}
-	Zapiski s predavanj predmeta Matematično modeliranje.
+	Zapiski s predavanj predmeta Statistika.
 \end{thebibliography}
 
 \end{document}
